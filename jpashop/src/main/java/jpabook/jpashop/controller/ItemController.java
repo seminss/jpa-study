@@ -20,6 +20,7 @@ public class ItemController {
         model.addAttribute("form", new BookForm());
         return "items/createItemForm";
     }
+
     @PostMapping(value = "/items/new")
     public String create(BookForm form) {
         Book book = new Book();
@@ -28,6 +29,7 @@ public class ItemController {
         book.setStockQuantity(form.getStockQuantity());
         book.setAuthor(form.getAuthor());
         book.setIsbn(form.getIsbn());
+
         itemService.saveItem(book);
         return "redirect:/items";
     }
@@ -65,8 +67,19 @@ public class ItemController {
      * 상품 수정
      */
     @PostMapping(value = "/items/{itemId}/edit")
-    public String updateItem(@ModelAttribute("form") BookForm form) {
-        itemService.updateItem(form.getId(), form.getName(), form.getPrice());
+    public String updateItem(@PathVariable Long itemId, @ModelAttribute("form") BookForm form) {
+
+          /** 어설프게 만든 엔티티를 파라미터로 쓰는건 버리기~~ */
+//        Book book = new Book();
+//        book.setId(form.getId());
+//        book.setName(form.getName());
+//        book.setPrice(form.getPrice());
+//        book.setStockQuantity(form.getStockQuantity());
+//        book.setAuthor(form.getAuthor());
+//        book.setIsbn(form.getIsbn());
+
+        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity());
+
         return "redirect:/items";
     }
 }
