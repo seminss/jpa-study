@@ -18,15 +18,23 @@ public class JpaMain {
         tx.begin();
 
         try {
+
+            Member member = new Member();
+            member.setId(4L);
+            member.setUsername("D");
+            member.setRoleType(RoleType.HI);
+            em.persist(member);
+
+            tx.commit();
             /**생성*/
-/*            Member member = new Member();
-            member.setId(3L);
+//          Member member = new Member();
+/*            member.setId(3L);
             member.setName("HelloB");*/
 
             /**조회*/
-/*             Member member =em.find(Member.class, 1L);
-           System.out.println("findMember.id="+findMember.getId());
-            System.out.println("findMember.name="+findMember.getName());*/
+/*            Member member =em.find(Member.class, 1L);
+            System.out.println("findMember.id="+member.getId());
+            System.out.println("findMember.name="+member.getName());*/
 
             /**삭제*/
 //            em.remove(findMember);

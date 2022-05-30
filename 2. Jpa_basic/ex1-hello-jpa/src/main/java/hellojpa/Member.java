@@ -1,21 +1,31 @@
 package hellojpa;
 
-import javax.persistence.Entity; //jpa가 사용하는 애구나 관리해야겠구나를 알려줌!
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Member {
-
     @Id
     private Long id;
-    private String name;
-    private int age;
-    public Member() {
-    }
 
-    public Member(long id, String name) {
-        setId(id);
-        setName(name);
+    @Column(name = "name",nullable=false) //db 컬럼명은 name이다.
+    private String Username;
+
+    private Integer age;
+
+    @Enumerated
+    private RoleType roleType;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
+
+    @Lob //varchar을 넘어서는 큰 컨텐츠를 넣고 싶을 때
+    private String description;
+
+    public Member() {
     }
 
     public Long getId() {
@@ -26,11 +36,51 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return Username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        Username = username;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
