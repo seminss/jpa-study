@@ -1,6 +1,10 @@
 package hellojpa;
 
+import javafx.util.converter.LocalDateTimeStringConverter;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -13,7 +17,7 @@ public class Member {
 
     private Integer age;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -24,6 +28,9 @@ public class Member {
 
     @Lob //varchar을 넘어서는 큰 컨텐츠를 넣고 싶을 때
     private String description;
+
+    private LocalDate testLocalDate;
+    private LocalDateTime testLocalDateTime;
 
     public Member() {
     }

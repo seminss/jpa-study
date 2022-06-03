@@ -22,7 +22,7 @@ public class JpaMain {
             Member member = new Member();
             member.setId(4L);
             member.setUsername("D");
-            member.setRoleType(RoleType.HI);
+            member.setRoleType(RoleType.GUEST);
             em.persist(member);
 
             tx.commit();
