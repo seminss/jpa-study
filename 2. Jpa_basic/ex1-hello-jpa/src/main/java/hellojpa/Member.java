@@ -8,23 +8,19 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@TableGenerator(
-        name="MEMBER_SEQ_GENERATOR",
-        table ="MY_SEQUENCES", //매핑할 데이터베이스 시퀀스 이름
-        pkColumnName = "MEMBER_SEQ", allocationSize = 1)
 public class Member {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.TABLE,
-                    generator = "MEMBER_SEQ_GENERATOR")
+    @Id @GeneratedValue
     private Long id;
 
-    @Column(name="name", nullable=false)
-    private String username;
+    @Column(name="USERNAME")
+    private String name;
 
-    public Member(){
+/*    @Column(name="TEAM_ID")
+    private Long teamId;*/
 
-    }
+    @ManyToOne
+    @JoinColumn(name="TEAM_ID")
+    private Team team; //member 입장에서 many, team으론 one
 
     public Long getId() {
         return id;
@@ -34,11 +30,19 @@ public class Member {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String name) {
+        this.name = name;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
