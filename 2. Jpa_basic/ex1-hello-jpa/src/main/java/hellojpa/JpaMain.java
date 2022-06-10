@@ -18,11 +18,10 @@ public class JpaMain {
         tx.begin();
 
         try {
-
             Member member = new Member();
-            member.setId(4L);
-            member.setUsername("D");
-            member.setRoleType(RoleType.GUEST);
+//            member.setId("ID_A");
+            member.setUsername("C");
+
             em.persist(member);
 
             tx.commit();
