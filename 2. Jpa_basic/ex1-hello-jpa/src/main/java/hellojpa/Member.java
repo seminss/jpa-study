@@ -30,7 +30,7 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
+    public String getUserName() {
         return name;
     }
 
