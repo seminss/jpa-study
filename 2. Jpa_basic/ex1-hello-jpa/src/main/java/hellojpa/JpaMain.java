@@ -7,6 +7,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.net.SocketOption;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class JpaMain {
@@ -19,30 +20,15 @@ public class JpaMain {
         tx.begin();
 
         try {
-            //팀 저장
-            Team team =new Team();
-            team.setName("TeamA");
-            em.persist(team);
-
-            //회원 저장
             Member member = new Member();
-            member.setUserName("member1");
+            member.setUsername("user");
+            member.setCreateBy("kim");
+            member.setCreateDate(LocalDateTime.now());
 
-            //역방향(주인이 아닌 방향)만 연관관계 설정
-            team.getMembers().add(member);
-            //연관관계의 주인에 값 설정
-            member.setTeam(team);
-
-            em.persist(member);
+            em.persist(member); // db에 저장
 
             em.flush();
             em.clear();
-
-            Team findTeam = em.find(Team.class, team.getId());
-            List<Member> members=findTeam.getMembers();
-            for(Member m: members){
-                System.out.println("m= "+m.getUserName());
-            }
 
             tx.commit();
         } catch(Exception e){

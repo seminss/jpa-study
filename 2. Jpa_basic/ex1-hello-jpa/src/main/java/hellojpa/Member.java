@@ -8,15 +8,13 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-public class Member {
+public class Member extends BaseEntity {
     @Id @GeneratedValue
+    @Column(name="MEMBER_ID")
     private Long id;
 
     @Column(name="USERNAME")
-    private String name;
-
-/*    @Column(name="TEAM_ID")
-    private Long teamId;*/
+    private String username;
 
     @ManyToOne
     @JoinColumn(name="TEAM_ID")
@@ -31,11 +29,11 @@ public class Member {
     }
 
     public String getUserName() {
-        return name;
+        return username;
     }
 
-    public void setUserName(String name) {
-        this.name = name;
+    public void setUsername(String name) {
+        this.username = name;
     }
 
     public Team getTeam() {
