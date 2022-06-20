@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name="ORDERS")// db에 그냥 order은 예약어라 orders로
-public class Order {
+public class Order extends BaseEntity{
 
     @Id @GeneratedValue
     @Column(name="OREDR_ID")
