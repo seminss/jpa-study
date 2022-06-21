@@ -3,6 +3,7 @@ package hellojpa;
 import javafx.util.converter.LocalDateTimeStringConverter;
 
 import javax.persistence.*;
+import java.beans.FeatureDescriptor;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -16,7 +17,7 @@ public class Member extends BaseEntity {
     @Column(name="USERNAME")
     private String username;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY,cascade=CascadeType.PERSIST)
     @JoinColumn(name="TEAM_ID")
     private Team team; //member 입장에서 many, team으론 one
 
