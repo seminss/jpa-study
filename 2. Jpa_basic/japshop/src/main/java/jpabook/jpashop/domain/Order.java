@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Table(name="ORDERS")// db에 그냥 order은 예약어라 orders로
 public class Order extends BaseEntity{
@@ -13,15 +16,15 @@ public class Order extends BaseEntity{
     @Column(name="OREDR_ID")
     private Long id; //orderId
 
-    @ManyToOne
+    @ManyToOne(fetch= LAZY)
     @JoinColumn(name="MEMBER_ID")
     private Member member;
 
-    @OneToOne
+    @OneToOne(fetch= LAZY,cascade = ALL)
     @JoinColumn(name="DELIVERY_ID")//FK명을 적는거임
     private Delivery delivery;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order",cascade = ALL)
     private List<OrderItem> orderItems=new ArrayList<>();
     private LocalDateTime orderDate;
 

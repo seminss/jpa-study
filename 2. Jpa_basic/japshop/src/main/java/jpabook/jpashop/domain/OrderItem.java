@@ -12,11 +12,11 @@ public class OrderItem extends BaseEntity{
     private Long id;
 
     /**외래키 값을 그대로 가지는 것이 아니라 객체를 가짐*/
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "ITEM_ID")
     private Item item;
 
