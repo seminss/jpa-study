@@ -1,15 +1,9 @@
 package hellojpa;
 
-import javafx.util.converter.LocalDateTimeStringConverter;
-
 import javax.persistence.*;
-import java.beans.FeatureDescriptor;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
-public class Member extends BaseEntity {
+public class Member {
     @Id @GeneratedValue
     @Column(name="MEMBER_ID")
     private Long id;
@@ -17,9 +11,21 @@ public class Member extends BaseEntity {
     @Column(name="USERNAME")
     private String username;
 
-    @ManyToOne(fetch= FetchType.LAZY,cascade=CascadeType.PERSIST)
-    @JoinColumn(name="TEAM_ID")
-    private Team team; //member 입장에서 many, team으론 one
+    //기간 Period
+    @Embedded
+    private Period workPeriod;
+
+    //주소
+    @Embedded
+    private Address homeAddress;
+
+    //주소
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "WORK_CITY")),
+            @AttributeOverride(name = "street", column = @Column(name = "WORK_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "WORK_ZIPCODE"))
+    })
 
     public Long getId() {
         return id;
@@ -29,19 +35,27 @@ public class Member extends BaseEntity {
         this.id = id;
     }
 
-    public String getUserName() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String name) {
-        this.username = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public void setHomeAddress(Address homeAddress) {
+        this.homeAddress = homeAddress;
     }
 }
