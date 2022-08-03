@@ -2,16 +2,41 @@ package jpql;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 public class Member {
     @Id @GeneratedValue
     private Long id;
     private String username;
     private int age;
+    @Enumerated(EnumType.STRING)
+    private MemberType type;
 
-    @ManyToOne
+    public MemberType getType() {
+        return type;
+    }
+
+    public void setType(MemberType type) {
+        this.type = type;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    @ManyToOne(fetch= LAZY)
     @JoinColumn(name="TEAM_ID")
     private Team team;
+
+    public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }
 
     public Long getId() {
         return id;
@@ -35,5 +60,15 @@ public class Member {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+/*                ", team=" + team +*/ //양방향 될 수 있어서 지움
+                '}';
     }
 }

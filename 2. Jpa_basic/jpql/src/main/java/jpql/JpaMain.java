@@ -3,6 +3,8 @@ package jpql;
 import javax.persistence.*;
 import java.util.List;
 
+import static jpql.MemberType.ADMIN;
+
 public class JpaMain {
     public static void main(String[] args) {
         EntityManagerFactory emf= Persistence.createEntityManagerFactory("hello");
@@ -10,21 +12,34 @@ public class JpaMain {
         EntityTransaction tx = em.getTransaction();
         tx.begin();
 
-        try {
+        try{
+            Team team = new Team();
+            team.setName("teamA");
+            em.persist(team);
+
             Member member = new Member();
             member.setUsername("member1");
             member.setAge(10);
-            em.persist(member);
+            member.setType(MemberType.ADMIN);
 
-            /*TypedQuery<Member> query = (TypedQuery<Member>) em.createQuery("select m from Member m where m.username = :username");
-            query.setParameter("username","member1");
-            Member singleResult = query.getSingleResult();
-            System.out.println("singleResult = "+singleResult.getUsername());*/
+            em.flush();
+            em.clear();
 
-            Member result = (Member) em.createQuery("select m from Member m where m.username = :username")
-                    .setParameter("username","member1")
-                    .getSingleResult();
-            System.out.println("singleResult = "+result.getUsername());
+            /*String query = "select m.username, 'HELLO', true From Member m " +
+                    "where m.type = jpql.MemberType.ADMIN";
+            List<Object[]> result = em.createQuery(query).getResultList();*/
+
+            String query = "select m.username, 'HELLO', true From Member m " +
+                    "where m.type = :userTYPE";
+            List<Object[]> result = em.createQuery(query)
+                    .setParameter("userType", MemberType.ADMIN)
+                    .getResultList();
+
+            for (Object[] objects : result){
+                System.out.println("objects=" + objects[0]);
+                System.out.println("objects=" + objects[1]);
+                System.out.println("objects=" + objects[2]);
+            }
 
             tx.commit();
         } catch(Exception e){
